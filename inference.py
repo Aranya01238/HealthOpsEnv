@@ -32,6 +32,7 @@ from utils.helpers import (
     format_log_start,
     format_log_step,
     format_log_end,
+    clip_reward,
 )
 
 # ---------------------------------------------------------------------------
@@ -142,7 +143,8 @@ def run_task(client: OpenAI, model: str, task_id: str) -> dict[str, Any]:
     print(format_log_start(task_id, ENV_NAME, model))
 
     error_msg = None
-    reward = 0.0
+    # Keep score in strict (0, 1) even on failures, matching validator rules.
+    reward = 0.001
     success = False
 
     try:
@@ -155,7 +157,7 @@ def run_task(client: OpenAI, model: str, task_id: str) -> dict[str, Any]:
 
         # Step
         step_data = step_env(action)
-        reward = step_data["reward"]
+        reward = clip_reward(float(step_data["reward"]))
         done = step_data["done"]
         info = step_data["info"]
 

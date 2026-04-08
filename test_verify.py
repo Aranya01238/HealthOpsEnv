@@ -39,7 +39,7 @@ obs = r.json()["observation"]
 assert obs["ticket_type"] == "appointment_request"
 print(f"  Reset OK. ticket_type={obs['ticket_type']}")
 
-# Perfect action -> 1.0
+# Perfect action -> 0.999 (strictly < 1)
 action = {
     "priority": "medium",
     "department": "appointments",
@@ -50,7 +50,7 @@ action = {
 r = httpx.post(f"{BASE}/step", json={"action": action})
 assert r.status_code == 200
 step = r.json()
-check("Perfect action", step["reward"], 1.0)
+check("Perfect action", step["reward"], 0.999)
 assert step["done"] is True
 
 # ----------------------------------------------------------------
@@ -61,7 +61,7 @@ obs = r.json()["observation"]
 assert obs["ticket_type"] == "inventory_shortage"
 print(f"  Reset OK. item={obs['item']}, stock={obs['stock_remaining']}")
 
-# Perfect action -> 1.0
+# Perfect action -> 0.999 (strictly < 1)
 action = {
     "priority": "high",
     "department": "procurement",
@@ -72,7 +72,7 @@ action = {
 r = httpx.post(f"{BASE}/step", json={"action": action})
 assert r.status_code == 200
 step = r.json()
-check("Perfect action", step["reward"], 1.0)
+check("Perfect action", step["reward"], 0.999)
 
 # ----------------------------------------------------------------
 print("\n--- Task 3: hard_1 (Emergency Coordination) ---")
@@ -82,7 +82,7 @@ obs = r.json()["observation"]
 assert obs["ticket_type"] == "emergency_coordination"
 print(f"  Reset OK. symptoms={obs['symptoms']}, ambulance_eta={obs['ambulance_eta']}")
 
-# Perfect action -> 1.0
+# Perfect action -> 0.999 (strictly < 1)
 action = {
     "priority": "critical",
     "department": "emergency",
@@ -93,7 +93,7 @@ action = {
 r = httpx.post(f"{BASE}/step", json={"action": action})
 assert r.status_code == 200
 step = r.json()
-check("Perfect action", step["reward"], 1.0)
+check("Perfect action", step["reward"], 0.999)
 
 # ----------------------------------------------------------------
 print("\n--- Penalty Test: hard_1 with bad action ---")
@@ -109,8 +109,8 @@ r = httpx.post(f"{BASE}/step", json={"action": bad_action})
 step = r.json()
 reward = step["reward"]
 penalties = step["info"]["penalties"]
-assert reward == 0.0, f"Expected 0.0 for bad action, got {reward}"
-check("Bad action (clipped to 0.0)", reward, 0.0, penalties)
+assert reward == 0.001, f"Expected 0.001 for bad action, got {reward}"
+check("Bad action (clipped to 0.001)", reward, 0.001, penalties)
 
 # ----------------------------------------------------------------
 print("\n--- Episode Guard Test ---")
