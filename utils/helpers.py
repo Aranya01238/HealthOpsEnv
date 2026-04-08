@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Any
 
 
-def clip_reward(score: float, low: float = 0.0, high: float = 1.0) -> float:
-    """Clip a reward score to [low, high]."""
+def clip_reward(score: float, low: float = 0.001, high: float = 0.999) -> float:
+    """Clip a reward score to (0, 1) exclusive, as required by OpenEnv validator."""
     return max(low, min(high, score))
 
 
@@ -40,7 +40,8 @@ def format_log_start(task_id: str, env_name: str, model: str) -> str:
 
 
 def format_log_step(step: int, action: str, reward: float, done: bool) -> str:
-    return f"[STEP] step={step} action={action} reward={reward:.2f} done={str(done).lower()}"
+    # Keep enough precision so exclusive (0, 1) values are not rounded to 0.00/1.00.
+    return f"[STEP] step={step} action={action} reward={reward:.4f} done={str(done).lower()}"
 
 
 def format_log_end(
@@ -51,7 +52,8 @@ def format_log_end(
     error: str | None = None,
 ) -> str:
     err_str = error if error else "null"
-    return f"[END] success={str(success).lower()} steps={steps} score={score:.2f} rewards={rewards:.2f} error={err_str}"
+    # Keep enough precision so exclusive (0, 1) values are not rounded to 0.00/1.00.
+    return f"[END] success={str(success).lower()} steps={steps} score={score:.4f} rewards={rewards:.4f} error={err_str}"
 
 
 def get_env_var(name: str, default: str | None = None) -> str:
