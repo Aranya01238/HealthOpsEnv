@@ -75,10 +75,11 @@ def grade(task_id: str, action: Action) -> RewardResult:
         breakdown["correct_escalation"] = 0.10
 
     final_reward = clip_reward(score)
+    clipped_raw_score = clip_reward(score)
 
     return RewardResult(
         task_id=task_id,
-        raw_score=round(score, 4),
+        raw_score=round(clipped_raw_score, 4),
         final_reward=round(final_reward, 4),
         breakdown=breakdown,
         penalties=penalties,
