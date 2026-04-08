@@ -1,0 +1,113 @@
+name: HealthOpsEnv
+version: "1.0.0"
+description: >
+  An OpenEnv-compatible healthcare operations workflow simulation environment
+  for training and evaluating AI agents on real-world hospital administration tasks.
+tagline: "Healthcare Ops. AI Ready."
+
+author: HealthOpsEnv Contributors
+license: MIT
+
+tasks:
+  - id: easy_1
+    name: Appointment Scheduling
+    difficulty: easy
+    description: >
+      A patient requests an appointment with a specialist.
+      The agent must schedule it correctly with appropriate priority and notifications.
+
+  - id: medium_1
+    name: Medicine Stock Shortage
+    difficulty: medium
+    description: >
+      A rural clinic reports critically low insulin stock.
+      The agent must trigger emergency restock and notify the right parties.
+
+  - id: hard_1
+    name: Emergency Coordination
+    difficulty: hard
+    description: >
+      Multi-factor emergency: patient with chest pain, ambulance delayed 35 min,
+      doctor unavailable, lab results pending. Agent must escalate at the highest level.
+
+observation_space:
+  type: object
+  fields:
+    task_id: string
+    ticket_type: string
+    patient_name: string | null
+    patient_age: integer | null
+    symptoms: array | null
+    department_requested: string | null
+    doctor_availability: array | null
+    stock_remaining: integer | null
+    daily_usage: integer | null
+    ambulance_eta: integer | null
+    lab_status: string | null
+    staff_available: integer | null
+    current_status: string
+
+action_space:
+  type: object
+  fields:
+    priority:
+      type: string
+      enum: [low, medium, high, critical]
+    department:
+      type: string
+      enum:
+        - appointments
+        - procurement
+        - emergency
+        - cardiology
+        - orthopedics
+        - laboratory
+        - operations
+        - administration
+        - ambulance
+    action:
+      type: string
+      examples:
+        - schedule_consultation
+        - emergency_restock
+        - escalate_to_admin
+        - dispatch_ambulance
+        - notify_lab
+        - assign_doctor
+        - arrange_followup
+        - dispatch_backup_and_escalate
+    notify:
+      type: array
+      items: string
+    escalation_level:
+      type: string | null
+      enum: [low, medium, high, highest, null]
+
+reward:
+  type: float
+  range: [0.0, 1.0]
+  breakdown:
+    correct_priority: +0.25
+    correct_department: +0.25
+    correct_action: +0.30
+    correct_notify: +0.10
+    correct_escalation: +0.10
+  penalties:
+    wrong_priority: -0.10
+    wrong_department: -0.15
+    dangerous_under_prioritization: -0.30
+    missing_critical_escalation: -0.25
+    invalid_action: -0.20
+
+api:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
+  health: GET /health
+
+runtime:
+  language: python
+  version: "3.11"
+  port: 7860
+  max_steps_per_episode: 1
+  max_runtime_minutes: 20

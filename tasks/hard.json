@@ -1,0 +1,18 @@
+{
+  "task_id": "hard_1",
+  "ticket_type": "emergency_coordination",
+  "patient_name": "Anita Roy",
+  "patient_age": 67,
+  "symptoms": ["chest pain", "difficulty breathing"],
+  "ambulance_eta": 35,
+  "doctor_available": false,
+  "lab_status": "pending",
+  "current_status": "critical",
+  "expected": {
+    "priority": "critical",
+    "department": "emergency",
+    "action": "dispatch_backup_and_escalate",
+    "notify": ["emergency_head", "ambulance_team", "cardiology_team"],
+    "escalation_level": "highest"
+  }
+}

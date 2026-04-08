@@ -1,0 +1,16 @@
+{
+  "task_id": "easy_1",
+  "ticket_type": "appointment_request",
+  "patient_name": "Ravi Sharma",
+  "patient_age": 52,
+  "department_requested": "Cardiology",
+  "doctor_availability": ["Tuesday 3 PM", "Wednesday 11 AM"],
+  "current_status": "pending",
+  "expected": {
+    "priority": "medium",
+    "department": "appointments",
+    "action": "schedule_consultation",
+    "notify": ["patient", "doctor"],
+    "escalation_level": null
+  }
+}

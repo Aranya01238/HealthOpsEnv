@@ -1,0 +1,16 @@
+{
+  "task_id": "medium_1",
+  "ticket_type": "inventory_shortage",
+  "clinic_location": "Rural Camp A",
+  "item": "Insulin",
+  "stock_remaining": 3,
+  "daily_usage": 10,
+  "current_status": "pending",
+  "expected": {
+    "priority": "high",
+    "department": "procurement",
+    "action": "emergency_restock",
+    "notify": ["inventory_manager", "regional_coordinator"],
+    "escalation_level": null
+  }
+}
