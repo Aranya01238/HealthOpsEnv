@@ -442,3 +442,9 @@ Select a scenario, fill in a decision like an AI agent would, and see the reward
 Available at `http://localhost:7860/docs` — all endpoints are interactive.
 
 ---
+
+## 🤗 Live Demo
+
+The environment is live on Hugging Face Spaces:
+
+**[https://huggingface.co/spaces/Aranya1234/HealthOpsEnv](https://huggingface.co/spaces/Aranya1234/HealthOpsEnv)**

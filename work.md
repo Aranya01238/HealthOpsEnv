@@ -615,3 +615,11 @@ HealthOpsEnv/
 ---
 
 *HealthOpsEnv — Built for the OpenEnv Hackathon, April 2026.*
+
+---
+
+## 10. Live Demo
+
+The environment is deployed and publicly accessible on Hugging Face Spaces:
+
+**[https://huggingface.co/spaces/Aranya1234/HealthOpsEnv](https://huggingface.co/spaces/Aranya1234/HealthOpsEnv)**

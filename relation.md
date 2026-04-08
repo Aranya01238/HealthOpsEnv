@@ -308,3 +308,11 @@ which happen outside the codebase.
 *HealthOpsEnv was built specifically to meet every requirement of the Meta × PyTorch OpenEnv Hackathon.*
 *Healthcare operations was chosen as the domain because it is a real, impactful, non-trivial problem domain*
 *that demonstrates the practical value of AI agent benchmarks beyond toy examples.*
+
+---
+
+## 7. Live Deployment
+
+The environment is deployed and publicly accessible on Hugging Face Spaces:
+
+**[https://huggingface.co/spaces/Aranya1234/HealthOpsEnv](https://huggingface.co/spaces/Aranya1234/HealthOpsEnv)**
